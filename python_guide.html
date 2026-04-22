@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Mastery Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --bg2: #13161e;
+  --bg3: #1a1d28;
+  --surface: #1e2130;
+  --surface2: #252838;
+  --border: #2e3248;
+  --accent: #f0c060;
+  --accent2: #7dd3fc;
+  --accent3: #a78bfa;
+  --accent4: #6ee7b7;
+  --accent5: #fb7185;
+  --text: #e8eaf6;
+  --text2: #9ea3c0;
+  --text3: #5c6080;
+  --code-bg: #111420;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+header {
+  position: relative;
+  padding: 80px 40px 60px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  background: linear-gradient(180deg, #0a0c12 0%, var(--bg) 100%);
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(240, 192, 96, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.snake-logo {
+  font-size: 56px;
+  display: block;
+  margin-bottom: 16px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-weight: 900;
+  color: var(--accent);
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text2);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.badges {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.badge {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-family: 'Fira Code', monospace;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.badge-syntax {
+  color: var(--accent);
+  border-color: rgba(240, 192, 96, 0.3);
+  background: rgba(240, 192, 96, 0.07);
+}
+
+.badge-operators {
+  color: var(--accent2);
+  border-color: rgba(125, 211, 252, 0.3);
+  background: rgba(125, 211, 252, 0.07);
+}
+
+.badge-strings {
+  color: var(--accent3);
+  border-color: rgba(167, 139, 250, 0.3);
+  background: rgba(167, 139, 250, 0.07);
+}
+
+.badge-structures {
+  color: var(--accent4);
+  border-color: rgba(110, 231, 183, 0.3);
+  background: rgba(110, 231, 183, 0.07);
+}
+
+.badge-flow {
+  color: var(--accent5);
+  border-color: rgba(251, 113, 133, 0.3);
+  background: rgba(251, 113, 133, 0.07);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+aside {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 28px 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+aside::-webkit-scrollbar {
+  width: 4px;
+}
+
+aside::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+nav ul {
+  list-style: none;
+}
+
+.nav-section-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 6px 24px;
+  margin-top: 14px;
+  font-weight: 500;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 24px;
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 13.5px;
+  transition: all 0.2s;
+  border-left: 2px solid transparent;
+}
+
+nav a:hover,
+nav a[aria-current="page"] {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: rgba(240, 192, 96, 0.06);
+}
+
+.nav-icon {
+  font-size: 14px;
+  width: 18px;
+  text-align: center;
+}
+
+main {
+  max-width: 900px;
+  padding: 48px 56px;
+}
+
+.section {
+  margin-bottom: 80px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-num {
+  font-family: 'Fira Code', monospace;
+  font-size: 12px;
+  color: var(--text3);
+  background: var(--surface);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.section-icon {
+  font-size: 1.6rem;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--accent2);
+  margin: 28px 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+h3::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  background: var(--accent2);
+  border-radius: 2px;
+}
+
+p {
+  color: var(--text2);
+  margin-bottom: 12px;
+}
+
+.code-block {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 14px 0;
+  position: relative;
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.code-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.code-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot-r {
+  background: #ff5f56;
+}
+
+.dot-y {
+  background: #ffbd2e;
+}
+
+.dot-g {
+  background: #27c93f;
+}
+
+.code-lang {
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 1px;
+}
+
+.copy-btn {
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+pre {
+  padding: 20px;
+  overflow-x: auto;
+  font-family: 'Fira Code', monospace;
+  font-size: 13.5px;
+  line-height: 1.8;
+  scrollbar-width: thin;
+}
+
+pre::-webkit-scrollbar {
+  height: 4px;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background: var(--border);
+}
+
+.kw {
+  color: #c792ea;
+}
+
+.fn {
+  color: #82aaff;
+}
+
+.st {
+  color: #c3e88d;
+}
+
+.cm {
+  color: #546e7a;
+  font-style: italic;
+}
+
+.nm {
+  color: #f78c6c;
+}
+
+.bi {
+  color: #89ddff;
+}
+
+.op {
+  color: var(--accent);
+}
+
+.dc {
+  color: var(--accent4);
+}
+
+code {
+  font-family: 'Fira Code', monospace;
+  font-size: 13px;
+  color: var(--accent);
+  background: rgba(240, 192, 96, 0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(240, 192, 96, 0.2);
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin: 14px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+thead tr {
+  background: var(--surface);
+}
+
+th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 500;
+  color: var(--accent);
+  font-family: 'Fira Code', monospace;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+}
+
+td {
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(46, 50, 72, 0.5);
+  color: var(--text2);
+  vertical-align: top;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+td code {
+  font-size: 12px;
+}
+
+.callout {
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 14px 0;
+  border-left: 3px solid;
+  font-size: 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.callout-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.callout-body {
+  color: var(--text2);
+}
+
+.callout-body strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.callout-warn {
+  background: rgba(251, 113, 133, 0.06);
+  border-color: var(--accent5);
+}
+
+.callout-warn .callout-body strong {
+  color: var(--accent5);
+}
+
+.callout-tip {
+  background: rgba(110, 231, 183, 0.06);
+  border-color: var(--accent4);
+}
+
+.callout-tip .callout-body strong {
+  color: var(--accent4);
+}
+
+.callout-info {
+  background: rgba(125, 211, 252, 0.06);
+  border-color: var(--accent2);
+}
+
+.callout-info .callout-body strong {
+  color: var(--accent2);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 14px 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.card-title {
+  font-family: 'Fira Code', monospace;
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.card p {
+  font-size: 13px;
+  margin: 0;
+  color: var(--text2);
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 28px 0;
+}
+
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.progress-item label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 5px;
+  font-family: 'Fira Code', monospace;
+}
+
+.progress-bar {
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+footer {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  border-top: 1px solid var(--border);
+  color: var(--text3);
+  font-size: 13px;
+  font-family: 'Fira Code', monospace;
+}
+
+footer span {
+  color: var(--accent);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  aside {
+    display: none;
+  }
+  main {
+    padding: 28px 20px;
+  }
+  header {
+    padding: 50px 20px 40px;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="snake-logo">&#x1F40D;</span>
+  <h1>Python Mastery Guide</h1>
+  <p class="subtitle">From Zero to Advanced &mdash; Complete Reference</p>
+  <div class="badges">
+    <span class="badge badge-syntax">Syntax &amp; Basics</span>
+    <span class="badge badge-operators">Operators</span>
+    <span class="badge badge-strings">Strings</span>
+    <span class="badge badge-structures">Data Structures</span>
+    <span class="badge badge-flow">Control Flow</span>
+    <span class="badge badge-syntax">Functions</span>
+    <span class="badge badge-operators">File I/O</span>
+  </div>
+</header>
+
+<div class="layout">
+
+<aside role="complementary" aria-label="Navigation sidebar">
+  <nav>
+    <div class="nav-section-title">Fundamentals</div>
+    <ul>
+      <li><a href="#syntax" aria-current="page"><span class="nav-icon">&#x1F4D0;</span> Syntax &amp; Basics</a></li>
+      <li><a href="#operators"><span class="nav-icon">&#x2699;&#xFE0F;</span> Operators</a></li>
+    </ul>
+
+    <div class="nav-section-title">Data Types</div>
+    <ul>
+      <li><a href="#strings"><span class="nav-icon">&#x1F4DD;</span> Strings</a></li>
+      <li><a href="#tuples"><span class="nav-icon">&#x1F512;</span> Tuples</a></li>
+      <li><a href="#sets"><span class="nav-icon">&#x1F535;</span> Sets</a></li>
+      <li><a href="#dicts"><span class="nav-icon">&#x1F4DA;</span> Dictionaries</a></li>
+    </ul>
+
+    <div class="nav-section-title">Logic &amp; Flow</div>
+    <ul>
+      <li><a href="#controlflow"><span class="nav-icon">&#x1F500;</span> Control Flow</a></li>
+      <li><a href="#functions"><span class="nav-icon">&#x26A1;</span> Functions</a></li>
+    </ul>
+
+    <div class="nav-section-title">I/O</div>
+    <ul>
+      <li><a href="#fileio"><span class="nav-icon">&#x1F4BE;</span> File I/O</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<main>
+
+<!-- SYNTAX -->
+<section class="section" id="syntax">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <span class="section-icon">&#x1F4D0;</span>
+    <h2>Syntax &amp; Basics</h2>
+  </div>
+  <p>Python is a <strong>dynamically typed</strong> language &mdash; no type declarations, no semicolons, no curly braces. Indentation is the structure.</p>
+
+  <h3>Variables &amp; Data Types</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="cm"># Five core built-in types</span>
+age      = <span class="nm">25</span>           <span class="cm"># int</span>
+price    = <span class="nm">9.99</span>         <span class="cm"># float</span>
+name     = <span class="st">"Alice"</span>      <span class="cm"># str</span>
+is_admin = <span class="kw">True</span>         <span class="cm"># bool</span>
+nothing  = <span class="kw">None</span>         <span class="cm"># NoneType</span>
+
+<span class="cm"># Multiple assignment</span>
+a, b, c = <span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>
+x = y = z = <span class="nm">0</span>
+a, b = b, a              <span class="cm"># swap!</span>
+
+<span class="cm"># Big numbers with underscores</span>
+population = <span class="nm">1_000_000_000</span></pre>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Type</th><th>Example</th><th>Mutable</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>int</code></td><td><code>42, -7, 1_000</code></td><td>&#x274C;</td><td>Unlimited size integers</td></tr>
+        <tr><td><code>float</code></td><td><code>3.14, 1.5e3</code></td><td>&#x274C;</td><td>64-bit decimal numbers</td></tr>
+        <tr><td><code>str</code></td><td><code>"hello"</code></td><td>&#x274C;</td><td>Sequence of characters</td></tr>
+        <tr><td><code>bool</code></td><td><code>True, False</code></td><td>&#x274C;</td><td>Subclass of int (1/0)</td></tr>
+        <tr><td><code>NoneType</code></td><td><code>None</code></td><td>&#x274C;</td><td>Absence of value</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Type Casting</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="bi">int</span>(<span class="st">"42"</span>)       <span class="cm"># 42</span>
+<span class="bi">float</span>(<span class="st">"3.14"</span>)   <span class="cm"># 3.14</span>
+<span class="bi">str</span>(<span class="nm">100</span>)        <span class="cm"># "100"</span>
+<span class="bi">bool</span>(<span class="nm">0</span>)         <span class="cm"># False  (0, "", [], {}, None are falsy)</span>
+<span class="bi">bool</span>(<span class="st">"hi"</span>)      <span class="cm"># True</span></pre>
+  </div>
+
+  <h3>f-Strings &amp; Print</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre>name, score = <span class="st">"Alice"</span>, <span class="nm">98.5</span>
+<span class="bi">print</span>(<span class="st">f"Name: {name}"</span>)          <span class="cm"># Name: Alice</span>
+<span class="bi">print</span>(<span class="st">f"Score: {score:.1f}"</span>)     <span class="cm"># Score: 98.5</span>
+<span class="bi">print</span>(<span class="st">f"Big: {1_000_000:,}"</span>)     <span class="cm"># Big: 1,000,000</span>
+<span class="bi">print</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, sep=<span class="st">"-"</span>, end=<span class="st">"!\n"</span>) <span class="cm"># a-b!</span></pre>
+  </div>
+
+  <div class="callout callout-warn">
+    <span class="callout-icon">&#x26A0;&#xFE0F;</span>
+    <div class="callout-body"><strong>Indentation is mandatory</strong>Python uses 4 spaces per level instead of curly braces. Missing or wrong indentation causes <code>IndentationError</code>.</div>
+  </div>
+</section>
+
+<!-- OPERATORS -->
+<section class="section" id="operators">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <span class="section-icon">&#x2699;&#xFE0F;</span>
+    <h2>Operators</h2>
+  </div>
+  <p>Python has 7 categories of operators. Understanding precedence and short-circuit evaluation is essential.</p>
+
+  <h3>Arithmetic Operators</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre>a, b = <span class="nm">10</span>, <span class="nm">3</span>
+
+a <span class="op">+</span> b    <span class="cm"># 13   addition</span>
+a <span class="op">-</span> b    <span class="cm"># 7    subtraction</span>
+a <span class="op">*</span> b    <span class="cm"># 30   multiplication</span>
+a <span class="op">/</span> b    <span class="cm"># 3.333...  always returns float!</span>
+a <span class="op">//</span> b   <span class="cm"># 3    floor division (truncates toward -infinity)</span>
+a <span class="op">%</span> b    <span class="cm"># 1    modulo (remainder)</span>
+a <span class="op">**</span> b   <span class="cm"># 1000 exponentiation (10^3)</span>
+
+<span class="cm"># Modulo tricks</span>
+<span class="nm">10</span> <span class="op">%</span> <span class="nm">2</span> == <span class="nm">0</span>   <span class="cm"># even check</span>
+<span class="nm">9</span> <span class="op">**</span> <span class="nm">0.5</span>      <span class="cm"># 3.0  square root!</span></pre>
+  </div>
+
+  <h3>Comparison &amp; Logical</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="cm"># Chained comparison - Python superpower!</span>
+<span class="nm">0</span> <span class="op">&lt;</span> x <span class="op">&lt;</span> <span class="nm">10</span>         <span class="cm"># True if x between 0 and 10</span>
+<span class="nm">18</span> <span class="op">&lt;=</span> age <span class="op">&lt;=</span> <span class="nm">65</span>    <span class="cm"># working age range</span>
+
+<span class="cm"># Short-circuit evaluation</span>
+<span class="kw">False</span> <span class="kw">and</span> <span class="bi">print</span>(<span class="st">"skipped"</span>)  <span class="cm"># right side never runs!</span>
+<span class="kw">True</span>  <span class="kw">or</span>  <span class="bi">print</span>(<span class="st">"skipped"</span>)  <span class="cm"># right side never runs!</span>
+
+<span class="cm"># or returns first truthy value</span>
+name = <span class="st">""</span>
+display = name <span class="kw">or</span> <span class="st">"Anonymous"</span>  <span class="cm"># "Anonymous"</span>
+
+<span class="cm"># Identity vs equality</span>
+a <span class="op">==</span> b    <span class="cm"># same VALUE</span>
+a <span class="kw">is</span> b    <span class="cm"># same OBJECT in memory</span>
+x <span class="kw">is</span> <span class="kw">None</span> <span class="cm"># correct way to check for None</span></pre>
+  </div>
+
+  <h3>Assignment &amp; Walrus</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre>x = <span class="nm">10</span>
+x <span class="op">+=</span> <span class="nm">5</span>   <span class="cm"># x = 15</span>
+x <span class="op">-=</span> <span class="nm">3</span>   <span class="cm"># x = 12</span>
+x <span class="op">*=</span> <span class="nm">2</span>   <span class="cm"># x = 24</span>
+x <span class="op">//=</span> <span class="nm">4</span>  <span class="cm"># x = 6</span>
+x <span class="op">**=</span> <span class="nm">2</span>  <span class="cm"># x = 36</span>
+
+<span class="cm"># Walrus := assign and return in one step (Python 3.8+)</span>
+<span class="kw">while</span> chunk <span class="op">:=</span> f.read(<span class="nm">8192</span>):
+    process(chunk)</pre>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Category</th><th>Operators</th><th>Returns</th></tr></thead>
+      <tbody>
+        <tr><td>Arithmetic</td><td><code>+ - * / // % **</code></td><td>Number</td></tr>
+        <tr><td>Comparison</td><td><code>== != &gt; &lt; &gt;= &lt;=</code></td><td>bool</td></tr>
+        <tr><td>Logical</td><td><code>and or not</code></td><td>Value (truthy/falsy)</td></tr>
+        <tr><td>Assignment</td><td><code>= += -= *= /= //= %= **= :=</code></td><td>&mdash;</td></tr>
+        <tr><td>Bitwise</td><td><code>&amp; | ^ ~ &lt;&lt; &gt;&gt;</code></td><td>int</td></tr>
+        <tr><td>Identity</td><td><code>is  is not</code></td><td>bool</td></tr>
+        <tr><td>Membership</td><td><code>in  not in</code></td><td>bool</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- STRINGS -->
+<section class="section" id="strings">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <span class="section-icon">&#x1F4DD;</span>
+    <h2>Strings</h2>
+  </div>
+  <p>Strings are <strong>immutable sequences of characters</strong>. Python has 50+ string methods built in.</p>
+
+  <h3>Indexing &amp; Slicing</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre>word = <span class="st">"Python"</span>
+<span class="cm">#       0 1 2 3 4 5   positive indices</span>
+<span class="cm">#      -6-5-4-3-2-1   negative indices</span>
+
+word[<span class="nm">0</span>]     <span class="cm"># "P"</span>
+word[<span class="op">-</span><span class="nm">1</span>]    <span class="cm"># "n"  last char</span>
+word[<span class="nm">1</span>:<span class="nm">4</span>]   <span class="cm"># "yth"</span>
+word[::<span class="op">-</span><span class="nm">1</span>]  <span class="cm"># "nohtyP"  reversed!</span>
+word[:<span class="nm">3</span>]    <span class="cm"># "Pyt"</span>
+word[<span class="nm">2</span>:]    <span class="cm"># "thon"</span></pre>
+  </div>
+
+  <h3>Essential String Methods</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre>s = <span class="st">"  Hello, Python World!  "</span>
+
+<span class="cm"># Case methods</span>
+s.upper()         <span class="cm"># "  HELLO, PYTHON WORLD!  "</span>
+s.lower()         <span class="cm"># "  hello, python world!  "</span>
+s.title()         <span class="cm"># "  Hello, Python World!  "</span>
+s.swapcase()      <span class="cm"># flip all cases</span>
+
+<span class="cm"># Strip whitespace or chars</span>
+s.strip()         <span class="cm"># "Hello, Python World!"</span>
+s.strip(<span class="st">"! "</span>)    <span class="cm"># remove specific chars from ends</span>
+
+<span class="cm"># Search methods</span>
+s.find(<span class="st">"Python"</span>)        <span class="cm"># 9 (index), -1 if missing</span>
+s.count(<span class="st">"l"</span>)            <span class="cm"># 3</span>
+s.startswith(<span class="st">"  Hello"</span>)  <span class="cm"># True</span>
+s.endswith(<span class="st">"  "</span>)         <span class="cm"># True</span>
+
+<span class="cm"># Replace, split, join</span>
+s.replace(<span class="st">"Python"</span>, <span class="st">"Java"</span>)   <span class="cm"># replaces substring</span>
+<span class="st">"a,b,c"</span>.split(<span class="st">","</span>)            <span class="cm"># ["a","b","c"]</span>
+<span class="st">" "</span>.join([<span class="st">"Hello"</span>, <span class="st">"World"</span>])  <span class="cm"># "Hello World"</span>
+
+<span class="cm"># Type checks</span>
+<span class="st">"hello"</span>.isalpha()    <span class="cm"># True</span>
+<span class="st">"12345"</span>.isdigit()    <span class="cm"># True</span>
+<span class="st">"abc123"</span>.isalnum()   <span class="cm"># True</span></pre>
+  </div>
+
+  <div class="callout callout-tip">
+    <span class="callout-icon">&#x1F4A1;</span>
+    <div class="callout-body"><strong>Strings are immutable</strong>Every string method returns a <em>new</em> string. The original is never modified. To "change" a string, reassign the variable.</div>
+  </div>
+</section>
+
+<!-- TUPLES -->
+<section class="section" id="tuples">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <span class="section-icon">&#x1F512;</span>
+    <h2>Tuples</h2>
+  </div>
+  <p>Tuples are <strong>ordered, immutable sequences</strong>. Faster than lists, hashable, and perfect for fixed data.</p>
+
+  <h3>Creating &amp; Unpacking</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="cm"># Creating tuples</span>
+point  = (<span class="nm">10</span>, <span class="nm">20</span>)
+single = (<span class="nm">42</span>,)        <span class="cm"># trailing comma required for single!</span>
+packed = <span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>      <span class="cm"># no parens needed - still a tuple</span>
+
+<span class="cm"># Unpacking</span>
+x, y = point            <span class="cm"># x=10, y=20</span>
+a, b = b, a             <span class="cm"># swap variables!</span>
+
+<span class="cm"># Extended unpacking with *</span>
+first, <span class="op">*</span>rest = (<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>)
+<span class="cm"># first=1, rest=[2, 3, 4, 5]</span>
+
+first, <span class="op">*</span>middle, last = (<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>)
+<span class="cm"># first=1, middle=[2,3,4], last=5</span>
+
+<span class="cm"># Named tuple - named access!</span>
+<span class="kw">from</span> collections <span class="kw">import</span> namedtuple
+Person = namedtuple(<span class="st">"Person"</span>, [<span class="st">"name"</span>, <span class="st">"age"</span>, <span class="st">"city"</span>])
+alice = Person(<span class="st">"Alice"</span>, <span class="nm">30</span>, <span class="st">"NY"</span>)
+<span class="bi">print</span>(alice.name)   <span class="cm"># Alice</span></pre>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">&#x2705; Use Tuples For</div>
+      <p>Fixed data like coordinates, RGB values, DB records, function return values</p>
+    </div>
+    <div class="card">
+      <div class="card-title">&#x1F511; Dict Keys</div>
+      <p>Tuples are hashable so they can be dictionary keys &mdash; lists cannot</p>
+    </div>
+    <div class="card">
+      <div class="card-title">&#x26A1; Performance</div>
+      <p>Tuples are ~3x faster to create than lists and use less memory</p>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th>Tuple</th><th>List</th><th>Set</th></tr></thead>
+      <tbody>
+        <tr><td>Ordered</td><td>&#x2705;</td><td>&#x2705;</td><td>&#x274C;</td></tr>
+        <tr><td>Mutable</td><td>&#x274C;</td><td>&#x2705;</td><td>&#x2705;</td></tr>
+        <tr><td>Duplicates</td><td>&#x2705;</td><td>&#x2705;</td><td>&#x274C;</td></tr>
+        <tr><td>Hashable</td><td>&#x2705;</td><td>&#x274C;</td><td>&#x274C;</td></tr>
+        <tr><td>Fast lookup</td><td>O(n)</td><td>O(n)</td><td>O(1)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SETS -->
+<section class="section" id="sets">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <span class="section-icon">&#x1F535;</span>
+    <h2>Sets</h2>
+  </div>
+  <p>Sets are <strong>unordered collections of unique elements</strong>. O(1) membership lookup and powerful mathematical set operations.</p>
+
+  <h3>Creating &amp; Modifying</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre>fruits = {<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cherry"</span>}
+empty  = <span class="bi">set</span>()   <span class="cm"># NOT {} -- that creates a dict!</span>
+
+<span class="cm"># Duplicates auto-removed</span>
+nums = {<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">3</span>, <span class="nm">3</span>}   <span class="cm"># {1, 2, 3}</span>
+
+<span class="cm"># Add / Remove</span>
+fruits.add(<span class="st">"mango"</span>)      <span class="cm"># add single</span>
+fruits.update([<span class="st">"kiwi"</span>, <span class="st">"grape"</span>]) <span class="cm"># add multiple</span>
+fruits.discard(<span class="st">"banana"</span>) <span class="cm"># remove safely (no error)</span>
+fruits.remove(<span class="st">"apple"</span>)   <span class="cm"># remove (KeyError if missing)</span></pre>
+  </div>
+
+  <h3>Set Operations</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre>a = {<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>}
+b = {<span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>}
+
+a <span class="op">|</span> b   <span class="cm"># {1,2,3,4,5,6}  Union (all elements)</span>
+a <span class="op">&amp;</span> b   <span class="cm"># {3, 4}          Intersection (common)</span>
+a <span class="op">-</span> b   <span class="cm"># {1, 2}          Difference (in a not b)</span>
+a <span class="op">^</span> b   <span class="cm"># {1,2,5,6}       Symmetric diff (not common)</span>
+
+<span class="cm"># Relationship checks</span>
+a.issubset(b)    <span class="cm"># a &lt;= b</span>
+a.issuperset(b)  <span class="cm"># a &gt;= b</span>
+a.isdisjoint(b)  <span class="cm"># no common elements?</span>
+
+<span class="cm"># Remove duplicates from list</span>
+dupes  = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">3</span>, <span class="nm">3</span>]
+unique = <span class="bi">list</span>(<span class="bi">set</span>(dupes))   <span class="cm"># [1, 2, 3]</span></pre>
+  </div>
+
+  <div class="callout callout-info">
+    <span class="callout-icon">&#x2139;&#xFE0F;</span>
+    <div class="callout-body"><strong>Empty set gotcha</strong><code>{}</code> creates an empty <em>dict</em>, not a set! Use <code>set()</code> for an empty set. This is a very common mistake.</div>
+  </div>
+</section>
+
+<!-- DICTS -->
+<section class="section" id="dicts">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <span class="section-icon">&#x1F4DA;</span>
+    <h2>Dictionaries</h2>
+  </div>
+  <p>Dictionaries are <strong>ordered, mutable key-value stores</strong> with O(1) lookup by key. The most versatile Python data structure.</p>
+
+  <h3>Creating &amp; Accessing</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre>person = {<span class="st">"name"</span>: <span class="st">"Alice"</span>, <span class="st">"age"</span>: <span class="nm">30</span>, <span class="st">"city"</span>: <span class="st">"NY"</span>}
+
+<span class="cm"># Access</span>
+person[<span class="st">"name"</span>]                <span class="cm"># "Alice" - KeyError if missing!</span>
+person.get(<span class="st">"phone"</span>, <span class="st">"N/A"</span>)   <span class="cm"># "N/A" - safe access</span>
+
+<span class="cm"># Add / Update</span>
+person[<span class="st">"email"</span>] = <span class="st">"a@b.com"</span>
+person.update({<span class="st">"age"</span>: <span class="nm">31</span>, <span class="st">"job"</span>: <span class="st">"Engineer"</span>})
+person.setdefault(<span class="st">"country"</span>, <span class="st">"USA"</span>)  <span class="cm"># set only if missing</span>
+
+<span class="cm"># Remove</span>
+age  = person.pop(<span class="st">"age"</span>)      <span class="cm"># remove and return value</span>
+last = person.popitem()        <span class="cm"># remove last inserted item</span>
+<span class="kw">del</span> person[<span class="st">"city"</span>]            <span class="cm"># delete by key</span>
+
+<span class="cm"># Iterate - most common</span>
+<span class="kw">for</span> k, v <span class="kw">in</span> person.items():
+    <span class="bi">print</span>(<span class="st">f"{k}: {v}"</span>)</pre>
+  </div>
+
+  <h3>Dict Comprehension &amp; Merge</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="cm"># Comprehensions</span>
+squares  = {x: x<span class="op">**</span><span class="nm">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">1</span>, <span class="nm">6</span>)}
+filtered = {k: v <span class="kw">for</span> k, v <span class="kw">in</span> scores.items() <span class="kw">if</span> v >= <span class="nm">60</span>}
+swapped  = {v: k <span class="kw">for</span> k, v <span class="kw">in</span> original.items()}
+
+<span class="cm"># Merge dicts</span>
+merged = {<span class="op">**</span>dict1, <span class="op">**</span>dict2}    <span class="cm"># Python 3.5+</span>
+merged = dict1 <span class="op">|</span> dict2         <span class="cm"># Python 3.9+</span>
+
+<span class="cm"># defaultdict - auto creates default value</span>
+<span class="kw">from</span> collections <span class="kw">import</span> defaultdict
+counter = defaultdict(<span class="bi">int</span>)
+<span class="kw">for</span> word <span class="kw">in</span> words:
+    counter[word] <span class="op">+=</span> <span class="nm">1</span>   <span class="cm"># no KeyError ever!</span></pre>
+  </div>
+</section>
+
+<!-- CONTROL FLOW -->
+<section class="section" id="controlflow">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <span class="section-icon">&#x1F500;</span>
+    <h2>Control Flow</h2>
+  </div>
+  <p>Control flow determines the order code executes &mdash; decisions, loops, and jump statements.</p>
+
+  <h3>Conditionals</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre>score = <span class="nm">78</span>
+
+<span class="kw">if</span> score >= <span class="nm">90</span>:
+    grade = <span class="st">"A"</span>
+<span class="kw">elif</span> score >= <span class="nm">80</span>:
+    grade = <span class="st">"B"</span>
+<span class="kw">elif</span> score >= <span class="nm">70</span>:
+    grade = <span class="st">"C"</span>
+<span class="kw">else</span>:
+    grade = <span class="st">"F"</span>
+
+<span class="cm"># Ternary - one-line if/else</span>
+status = <span class="st">"Adult"</span> <span class="kw">if</span> age >= <span class="nm">18</span> <span class="kw">else</span> <span class="st">"Minor"</span>
+
+<span class="cm"># match statement (Python 3.10+)</span>
+<span class="kw">match</span> command:
+    <span class="kw">case</span> <span class="st">"quit"</span>:
+        quit()
+    <span class="kw">case</span> <span class="st">"help"</span> | <span class="st">"?"</span>:
+        show_help()
+    <span class="kw">case</span> _:
+        <span class="bi">print</span>(<span class="st">"Unknown"</span>)</pre>
+  </div>
+
+  <h3>Loops &amp; Loop Control</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="cm"># for loop - iterate sequences</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">5</span>): ...              <span class="cm"># 0 1 2 3 4</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">0</span>, <span class="nm">20</span>, <span class="nm">5</span>): ...      <span class="cm"># 0 5 10 15</span>
+<span class="kw">for</span> i, v <span class="kw">in</span> <span class="bi">enumerate</span>(lst, <span class="nm">1</span>): ... <span class="cm"># index + value</span>
+<span class="kw">for</span> a, b <span class="kw">in</span> <span class="bi">zip</span>(list1, list2): ...  <span class="cm"># parallel iteration</span>
+
+<span class="cm"># while loop - condition based</span>
+<span class="kw">while</span> count <span class="op">&lt;</span> <span class="nm">10</span>:
+    count <span class="op">+=</span> <span class="nm">1</span>
+
+<span class="cm"># Loop control keywords</span>
+<span class="kw">break</span>       <span class="cm"># exit loop immediately</span>
+<span class="kw">continue</span>    <span class="cm"># skip to next iteration</span>
+<span class="kw">pass</span>        <span class="cm"># do nothing (placeholder)</span>
+
+<span class="cm"># for...else - Python superpower!</span>
+<span class="kw">for</span> user <span class="kw">in</span> users:
+    <span class="kw">if</span> user <span class="op">==</span> target:
+        <span class="bi">print</span>(<span class="st">"Found!"</span>)
+        <span class="kw">break</span>
+<span class="kw">else</span>:
+    <span class="bi">print</span>(<span class="st">"Not found"</span>)  <span class="cm"># runs only if no break!</span></pre>
+  </div>
+
+  <div class="callout callout-tip">
+    <span class="callout-icon">&#x1F4A1;</span>
+    <div class="callout-body"><strong>for vs while</strong>Use <code>for</code> when you know the iterations or are iterating a sequence. Use <code>while</code> when waiting for a condition to change or when you don't know how many iterations you need.</div>
+  </div>
+</section>
+
+<!-- FUNCTIONS -->
+<section class="section" id="functions">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <span class="section-icon">&#x26A1;</span>
+    <h2>Functions</h2>
+  </div>
+  <p>Functions are <strong>first-class objects</strong> in Python &mdash; they can be assigned, passed, and returned like any value.</p>
+
+  <h3>Arguments &mdash; All Types</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="kw">def</span> <span class="fn">create_user</span>(username, password, <span class="op">*</span>roles,
+                active=<span class="kw">True</span>, <span class="op">**</span>metadata):
+    <span class="bi">print</span>(username, roles, active, metadata)
+
+create_user(<span class="st">"alice"</span>, <span class="st">"pass"</span>, <span class="st">"admin"</span>, <span class="st">"editor"</span>,
+            active=<span class="kw">True</span>, email=<span class="st">"a@b.com"</span>)
+
+<span class="cm"># *args  collects extra positional args into a tuple</span>
+<span class="cm"># **kwargs collects extra keyword args into a dict</span>
+
+<span class="cm"># Return multiple values (returns a tuple)</span>
+<span class="kw">def</span> <span class="fn">min_max</span>(nums):
+    <span class="kw">return</span> <span class="bi">min</span>(nums), <span class="bi">max</span>(nums)
+
+low, high = min_max([<span class="nm">3</span>, <span class="nm">1</span>, <span class="nm">9</span>, <span class="nm">4</span>])</pre>
+  </div>
+
+  <h3>Lambda, Closures &amp; Decorators</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="cm"># Lambda - anonymous one-line function</span>
+square   = <span class="kw">lambda</span> x: x <span class="op">**</span> <span class="nm">2</span>
+students.sort(key=<span class="kw">lambda</span> s: s[<span class="st">"age"</span>])
+
+<span class="cm"># Closure - function that remembers enclosing scope</span>
+<span class="kw">def</span> <span class="fn">make_greeting</span>(greeting):
+    <span class="kw">def</span> <span class="fn">greet</span>(name):
+        <span class="kw">return</span> <span class="st">f"{greeting}, {name}!"</span>
+    <span class="kw">return</span> greet
+
+hello = make_greeting(<span class="st">"Hello"</span>)
+hello(<span class="st">"Alice"</span>)   <span class="cm"># "Hello, Alice!" - closure!</span>
+
+<span class="cm"># Decorator - wrap a function to add behavior</span>
+<span class="kw">from</span> functools <span class="kw">import</span> wraps
+
+<span class="kw">def</span> <span class="fn">timer</span>(func):
+    <span class="dc">@wraps</span>(func)
+    <span class="kw">def</span> <span class="fn">wrapper</span>(<span class="op">*</span>args, <span class="op">**</span>kwargs):
+        <span class="kw">import</span> time
+        start = time.time()
+        result = func(<span class="op">*</span>args, <span class="op">**</span>kwargs)
+        <span class="bi">print</span>(<span class="st">f"Took {time.time()-start:.4f}s"</span>)
+        <span class="kw">return</span> result
+    <span class="kw">return</span> wrapper
+
+<span class="dc">@timer</span>
+<span class="kw">def</span> <span class="fn">slow_func</span>():
+    <span class="kw">import</span> time; time.sleep(<span class="nm">1</span>)</pre>
+  </div>
+
+  <h3>Scope &mdash; LEGB Rule</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Letter</th><th>Scope</th><th>Location</th><th>Modifier</th></tr></thead>
+      <tbody>
+        <tr><td><strong>L</strong></td><td>Local</td><td>Inside current function</td><td>&mdash;</td></tr>
+        <tr><td><strong>E</strong></td><td>Enclosing</td><td>Outer function (nested)</td><td><code>nonlocal</code></td></tr>
+        <tr><td><strong>G</strong></td><td>Global</td><td>Module level</td><td><code>global</code></td></tr>
+        <tr><td><strong>B</strong></td><td>Built-in</td><td>Python internals</td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FILE I/O -->
+<section class="section" id="fileio">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <span class="section-icon">&#x1F4BE;</span>
+    <h2>File I/O</h2>
+  </div>
+  <p>File I/O lets your program <strong>read and write data permanently</strong>. Always use <code>with</code> &mdash; it guarantees the file closes even if an error occurs.</p>
+
+  <h3>Reading &amp; Writing</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="cm"># Reading modes</span>
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"file.txt"</span>, <span class="st">"r"</span>, encoding=<span class="st">"utf-8"</span>) <span class="kw">as</span> f:
+    content = f.read()          <span class="cm"># entire file as string</span>
+    lines   = f.readlines()     <span class="cm"># list of all lines</span>
+    line    = f.readline()      <span class="cm"># one line at a time</span>
+    <span class="kw">for</span> line <span class="kw">in</span> f: ...          <span class="cm"># memory-efficient iteration!</span>
+
+<span class="cm"># Writing (overwrites existing content!)</span>
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"file.txt"</span>, <span class="st">"w"</span>, encoding=<span class="st">"utf-8"</span>) <span class="kw">as</span> f:
+    f.write(<span class="st">"Hello\n"</span>)
+    f.writelines([<span class="st">"line1\n"</span>, <span class="st">"line2\n"</span>])
+
+<span class="cm"># Append (never overwrites)</span>
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"log.txt"</span>, <span class="st">"a"</span>, encoding=<span class="st">"utf-8"</span>) <span class="kw">as</span> f:
+    f.write(<span class="st">"New log entry\n"</span>)
+
+<span class="cm"># Error handling for files</span>
+<span class="kw">try</span>:
+    <span class="kw">with</span> <span class="bi">open</span>(<span class="st">"missing.txt"</span>) <span class="kw">as</span> f:
+        data = f.read()
+<span class="kw">except</span> FileNotFoundError:
+    <span class="bi">print</span>(<span class="st">"File not found!"</span>)
+<span class="kw">except</span> PermissionError:
+    <span class="bi">print</span>(<span class="st">"No permission!"</span>)</pre>
+  </div>
+
+  <h3>CSV &amp; JSON</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">python</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="kw">import</span> csv, json
+
+<span class="cm"># CSV - DictReader gives a dict per row</span>
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"data.csv"</span>, <span class="st">"r"</span>, encoding=<span class="st">"utf-8"</span>) <span class="kw">as</span> f:
+    <span class="kw">for</span> row <span class="kw">in</span> csv.DictReader(f):
+        <span class="bi">print</span>(row[<span class="st">"name"</span>], row[<span class="st">"age"</span>])
+
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"out.csv"</span>, <span class="st">"w"</span>, newline=<span class="st">""</span>) <span class="kw">as</span> f:
+    w = csv.DictWriter(f, fieldnames=[<span class="st">"name"</span>, <span class="st">"age"</span>])
+    w.writeheader()
+    w.writerows(data)
+
+<span class="cm"># JSON - load from file / dump to file</span>
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"data.json"</span>) <span class="kw">as</span> f:
+    data = json.load(f)          <span class="cm"># file to dict</span>
+
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"out.json"</span>, <span class="st">"w"</span>) <span class="kw">as</span> f:
+    json.dump(data, f, indent=<span class="nm">4</span>) <span class="cm"># dict to file</span>
+
+<span class="cm"># String conversions</span>
+json.loads(<span class="st">'{"x": 1}'</span>)   <span class="cm"># JSON string to dict</span>
+json.dumps({<span class="st">"x"</span>: <span class="nm">1</span>})     <span class="cm"># dict to JSON string</span></pre>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Mode</th><th>Description</th><th>File exists?</th><th>File missing?</th></tr></thead>
+      <tbody>
+        <tr><td><code>"r"</code></td><td>Read only</td><td>OK</td><td>&#x274C; Error</td></tr>
+        <tr><td><code>"w"</code></td><td>Write (overwrite)</td><td>Overwrites</td><td>Creates new</td></tr>
+        <tr><td><code>"a"</code></td><td>Append to end</td><td>Appends</td><td>Creates new</td></tr>
+        <tr><td><code>"x"</code></td><td>Create new only</td><td>&#x274C; Error</td><td>Creates new</td></tr>
+        <tr><td><code>"r+"</code></td><td>Read + Write</td><td>OK</td><td>&#x274C; Error</td></tr>
+        <tr><td><code>"rb"</code></td><td>Read binary</td><td>OK</td><td>&#x274C; Error</td></tr>
+        <tr><td><code>"wb"</code></td><td>Write binary</td><td>Overwrites</td><td>Creates new</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-warn">
+    <span class="callout-icon">&#x26A0;&#xFE0F;</span>
+    <div class="callout-body"><strong>Always handle file errors</strong>Wrap file operations in <code>try/except FileNotFoundError</code> and <code>PermissionError</code>. Files can always fail &mdash; disk full, missing path, or permission denied.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Topics Coverage</h3>
+  <div class="progress-list coverage-progress">
+    <div class="progress-item">
+      <label><span>Syntax &amp; Basics</span><span>Foundation</span></label>
+      <div class="progress-bar"><div class="progress-fill" data-width="100"></div></div>
+    </div>
+    <div class="progress-item">
+      <label><span>Operators</span><span>Essential</span></label>
+      <div class="progress-bar"><div class="progress-fill" data-width="95"></div></div>
+    </div>
+    <div class="progress-item">
+      <label><span>Strings</span><span>Heavy usage</span></label>
+      <div class="progress-bar"><div class="progress-fill" data-width="90"></div></div>
+    </div>
+    <div class="progress-item">
+      <label><span>Tuples / Sets / Dicts</span><span>Core structures</span></label>
+      <div class="progress-bar"><div class="progress-fill" data-width="88"></div></div>
+    </div>
+    <div class="progress-item">
+      <label><span>Control Flow</span><span>Program logic</span></label>
+      <div class="progress-bar"><div class="progress-fill" data-width="92"></div></div>
+    </div>
+    <div class="progress-item">
+      <label><span>Functions</span><span>Advanced concepts</span></label>
+      <div class="progress-bar"><div class="progress-fill" data-width="85"></div></div>
+    </div>
+    <div class="progress-item">
+      <label><span>File I/O</span><span>Real-world usage</span></label>
+      <div class="progress-bar"><div class="progress-fill" data-width="80"></div></div>
+    </div>
+  </div>
+
+</section>
+
+</main>
+</div>
+
+<footer>
+  Built by Chandril goswami <span>&#x2665;</span> &nbsp;&middot;&nbsp; Python Mastery Guide &nbsp;&middot;&nbsp; <span>Syntax &rarr; File I/O</span>
+</footer>
+
+<script>
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      if (entry.target.id === 'fileio') {
+        setTimeout(() => {
+          document.querySelectorAll('.progress-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+        }, 300);
+      }
+    }
+  });
+}, { threshold: 0.1 });
+sections.forEach(s => observer.observe(s));
+
+const navLinks = document.querySelectorAll('nav a');
+const sectionEls = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sectionEls.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+  });
+  navLinks.forEach(link => {
+    link.removeAttribute('aria-current');
+    if (link.getAttribute('href') === '#' + current) link.setAttribute('aria-current', 'page');
+  });
+});
+
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  const text = pre.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'copied!';
+    btn.style.color = 'var(--accent4)';
+    btn.style.borderColor = 'var(--accent4)';
+    setTimeout(() => {
+      btn.textContent = 'copy';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>
